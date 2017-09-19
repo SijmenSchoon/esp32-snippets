@@ -21,8 +21,13 @@ public:
 
 	void erase();
 	void erase(std::string key);
+
 	void get(std::string key, std::string *result);
+  void get(std::string key, int32_t *result);
+
 	void set(std::string key, std::string data);
+  void set(std::string key, int32_t data);
+
 private:
 	std::string m_name;
 	nvs_handle m_handle;

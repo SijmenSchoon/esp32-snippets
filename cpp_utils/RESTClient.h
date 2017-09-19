@@ -68,7 +68,7 @@ public:
 	RESTClient();
 	virtual ~RESTClient();
 	void addHeader(std::string name, std::string value);
-	void get();
+	bool get();
 	std::string getErrorMessage();
 	/**
 	 * @brief Get the response payload data from the last REST call.
@@ -86,7 +86,7 @@ public:
 		return m_timings;
 	}
 
-	void post(std::string body);
+	bool post(std::string body);
 
 	/**
 	 * @brief Set the URL for the target.

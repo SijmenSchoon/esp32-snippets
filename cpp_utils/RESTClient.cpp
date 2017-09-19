@@ -36,13 +36,17 @@ RESTClient::~RESTClient() {
 /**
  * @brief Perform an HTTP GET request.
  */
-void RESTClient::get() {
+bool RESTClient::get() {
 	prepForCall();
 	::curl_easy_setopt(m_curlHandle, CURLOPT_HTTPGET, 1);
+
 	int rc = ::curl_easy_perform(m_curlHandle);
 	if (rc != CURLE_OK) {
 		ESP_LOGE(tag, "get(): %s", getErrorMessage().c_str());
+    return false;
 	}
+
+  return true;
 } // get
 
 
@@ -52,13 +56,17 @@ void RESTClient::get() {
  * @param [in] body The body of the payload to send with the post request.
  *
  */
-void RESTClient::post(std::string body) {
+bool RESTClient::post(std::string body) {
 	prepForCall();
 	::curl_easy_setopt(m_curlHandle, CURLOPT_POSTFIELDS, body.c_str());
+
 	int rc = ::curl_easy_perform(m_curlHandle);
 	if (rc != CURLE_OK) {
 		ESP_LOGE(tag, "post(): %s", getErrorMessage().c_str());
+    return false;
 	}
+
+  return true;
 } // post
 
 

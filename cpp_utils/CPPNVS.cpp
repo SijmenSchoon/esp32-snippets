@@ -69,6 +69,17 @@ void NVS::get(std::string key, std::string* result) {
 
 
 /**
+ * @brief Retrieve a 32-bit integer value by key.
+ *
+ * @param [in] key The key to read from the namespace.
+ * @param [out] result The integer read from the %NVS storage.
+ */
+void NVS::get(std::string key, int32_t *result) {
+    nvs_get_i32(m_handle, key.c_str(), result);
+} // get
+
+
+/**
  * @brief Set the string value by key.
  *
  * @param [in] key The key to set from the namespace.
@@ -76,4 +87,15 @@ void NVS::get(std::string key, std::string* result) {
  */
 void NVS::set(std::string key, std::string data) {
 	nvs_set_str(m_handle, key.c_str(), data.c_str());
+} // set
+
+
+/**
+ * @brief Set the string value by key.
+ *
+ * @param [in] key The key to set from the namespace.
+ * @param [in] data The value to set for the key.
+ */
+void NVS::set(std::string key, int32_t data) {
+    nvs_set_i32(m_handle, key.c_str(), data);
 } // set
