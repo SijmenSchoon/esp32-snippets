@@ -27,6 +27,7 @@
 /**
  * Modified by Neil Kolban (2017) for ESP32 support.
  */
+#if 0
 
 #include "MAX7219.h"
 #include <math.h>
@@ -278,3 +279,4 @@ void MAX7219::setNumber(uint32_t number, int addr) {
 		}
 	}
 }
+#endif

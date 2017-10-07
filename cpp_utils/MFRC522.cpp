@@ -15,7 +15,7 @@
  * Neil Kolban, July 2017.
  *
  */
-
+#if 0
 #include "MFRC522.h"
 #include "MFRC522Debug.h"
 #include <FreeRTOS.h>
@@ -1643,3 +1643,4 @@ bool MFRC522::PICC_ReadCardSerial() {
 	MFRC522::StatusCode result = PICC_Select(&uid);
 	return (result == STATUS_OK);
 } // End
+#endif

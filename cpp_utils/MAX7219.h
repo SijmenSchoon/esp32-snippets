@@ -23,7 +23,7 @@
  *    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  *    OTHER DEALINGS IN THE SOFTWARE.
  */
-
+#if 0
 #ifndef MAX7219_h
 #define MAX7219_h
 
@@ -191,3 +191,4 @@ public:
 
 #endif	// MAX7219.h
 
+#endif

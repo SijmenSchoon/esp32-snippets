@@ -1,4 +1,4 @@
-
+#if 0
 #include "MFRC522Debug.h"
 
 /**
@@ -44,3 +44,4 @@ const char *MFRC522Debug::GetStatusCodeName(MFRC522::StatusCode code	///< One of
 		default:					return "Unknown error";
 	}
 } // End GetStatusCodeName()
+#endif
