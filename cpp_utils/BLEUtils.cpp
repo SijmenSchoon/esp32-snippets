@@ -288,6 +288,29 @@ static const member_t members_ids[] = {
 	{0, "" }
 };
 
+typedef struct {
+	uint32_t    assignedNumber;
+	std::string name;
+} gattdescriptor_t;
+
+static const gattdescriptor_t g_descriptor_ids[] = {
+		{0x2905,"Characteristic Aggregate Format"},
+		{0x2900,"Characteristic Extended Properties"},
+		{0x2904,"Characteristic Presentation Format"},
+		{0x2901,"Characteristic User Description"},
+		{0x2902,"Client Characteristic Configuration"},
+		{0x290B,"Environmental Sensing Configuration"},
+		{0x290C,"Environmental Sensing Measurement"},
+		{0x290D,"Environmental Sensing Trigger Setting"},
+		{0x2907,"External Report Reference"},
+		{0x2909,"Number of Digitals"},
+		{0x2908,"Report Reference"},
+		{0x2903,"Server Characteristic Configuration"},
+		{0x290E,"Time Trigger Setting"},
+		{0x2906,"Valid Range"},
+		{0x290A,"Value Trigger Setting"},
+		{ 0, "" }
+};
 
 typedef struct {
 	uint32_t    assignedNumber;
@@ -1519,13 +1542,23 @@ void BLEUtils::dumpGattServerEvent(
 		} // ESP_GATTS_ADD_CHAR_DESCR_EVT
 
 		case ESP_GATTS_ADD_CHAR_EVT: {
-			ESP_LOGD(LOG_TAG, "[status: %s, attr_handle: %d 0x%.2x, service_handle: %d 0x%.2x, char_uuid: %s]",
-				gattStatusToString(evtParam->add_char.status).c_str(),
-				evtParam->add_char.attr_handle,
-				evtParam->add_char.attr_handle,
-				evtParam->add_char.service_handle,
-				evtParam->add_char.service_handle,
-				BLEUUID(evtParam->add_char.char_uuid).toString().c_str());
+			if (evtParam->add_char.status == ESP_GATT_OK) {
+				ESP_LOGD(LOG_TAG, "[status: %s, attr_handle: %d 0x%.2x, service_handle: %d 0x%.2x, char_uuid: %s]",
+					gattStatusToString(evtParam->add_char.status).c_str(),
+					evtParam->add_char.attr_handle,
+					evtParam->add_char.attr_handle,
+					evtParam->add_char.service_handle,
+					evtParam->add_char.service_handle,
+					BLEUUID(evtParam->add_char.char_uuid).toString().c_str());
+			} else {
+				ESP_LOGE(LOG_TAG, "[status: %s, attr_handle: %d 0x%.2x, service_handle: %d 0x%.2x, char_uuid: %s]",
+					gattStatusToString(evtParam->add_char.status).c_str(),
+					evtParam->add_char.attr_handle,
+					evtParam->add_char.attr_handle,
+					evtParam->add_char.service_handle,
+					evtParam->add_char.service_handle,
+					BLEUUID(evtParam->add_char.char_uuid).toString().c_str());
+			}
 			break;
 		} // ESP_GATTS_ADD_CHAR_EVT
 
@@ -1799,6 +1832,23 @@ std::string BLEUtils::gattCharacteristicUUIDToString(uint32_t characteristicUUID
 	}
 	return "Unknown";
 } // gattCharacteristicUUIDToString
+
+
+/**
+ * @brief Given the UUID for a BLE defined descriptor, return its string representation.
+ * @param [in] descriptorUUID UUID of the descriptor to be returned as a string.
+ * @return The string representation of a descriptor UUID.
+ */
+std::string BLEUtils::gattDescriptorUUIDToString(uint32_t descriptorUUID) {
+	gattdescriptor_t* p = (gattdescriptor_t *)g_descriptor_ids;
+	while (p->name.length() > 0) {
+		if (p->assignedNumber == descriptorUUID) {
+			return p->name;
+		}
+		p++;
+	}
+	return "";
+} // gattDescriptorUUIDToString
 
 
 /**
